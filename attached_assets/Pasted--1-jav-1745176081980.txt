@@ -1,0 +1,94 @@
+#### **1. تحديد مصدر البنية الدائرية**  
+- **افحص الكائن المُرسَل إلى الواجهة الأمامية**:  
+  ```javascript
+  console.log("User Object:", user); // اطبع كائن المستخدم قبل التحويل إلى JSON
+  ```  
+  - ابحث عن أي خصائص تحتوي على مراجع متبادلة (مثل `user.parent → user`).
+
+---
+
+#### **2. تنقية البيانات باستخدام replacer في JSON.stringify**  
+- استخدم الدالة `replacer` لاستبعاد الخصائص الدائرية:  
+  ```javascript
+  const safeUser = JSON.stringify(user, (key, value) => {
+    if (key === "parent" || key === "children") { // استبدل "parent" و"children" بأسماء الخصائص المسببة للمشكلة
+      return undefined; // تجاهل هذه الخصائص
+    }
+    return value;
+  });
+  ```  
+
+---
+
+#### **3. استخدام مكتبة لمعالجة البنى الدائرية**  
+- **مثال مع `json-stringify-safe`**:  
+  ```bash
+  npm install json-stringify-safe
+  ```  
+  ```javascript
+  const stringify = require('json-stringify-safe');
+  const safeUser = stringify(user);
+  ```  
+
+---
+
+#### **4. تعديل بنية البيانات (إذا كنت تستخدم ORM مثل Mongoose)**  
+- **استخدم `.lean()` لتحويل المستند إلى كائن JavaScript عادي**:  
+  ```javascript
+  const user = await User.findById(userId).lean(); // لـ Mongoose
+  ```  
+- **استخدم `toJSON()` إذا كان الكائن من صنف مخصص**:  
+  ```javascript
+  class User {
+    toJSON() {
+      return { id: this.id, name: this.name }; // استبعاد الخصائص الدائرية
+    }
+  }
+  ```  
+
+---
+
+#### **5. مثال تطبيقي في Express.js**  
+```javascript
+app.post('/admin/login', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    
+    // تجنب إرسال بيانات حساسة أو دوائرية
+    const safeUser = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role
+    };
+
+    res.json({ user: safeUser });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+```  
+
+---
+
+#### **6. إذا كان الخطأ من Firebase Authentication**  
+- **تأكد من أن كائن المستخدم لا يحتوي على مراجع داخلية**:  
+  ```javascript
+  const userData = {
+    uid: user.uid,
+    email: user.email,
+    displayName: user.displayName
+    // تجنب إرسال metadata أو خصائص معقدة
+  };
+  ```  
+
+---
+
+### **السبب الشائع للخطأ**  
+- **الخصائص المتبادلة**:  
+  ```javascript
+  const obj1 = { name: "Alice" };
+  const obj2 = { friend: obj1 };
+  obj1.friend = obj2; // إنشاء بنية دائرية
+  ```  
+  عند محاولة تحويل `obj1` إلى JSON، سيظهر الخطأ نفسه.

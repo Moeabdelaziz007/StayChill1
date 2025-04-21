@@ -1,0 +1,69 @@
+// 📁 مسار افتراضي: app/dashboard/super-admin/index.tsx
+import { useState } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { UsersTable } from '@/components/admin/UsersTable';
+import { PropertiesTable } from '@/components/admin/PropertiesTable';
+import { ServicesTable } from '@/components/admin/ServicesTable';
+import { AppSettings } from '@/components/admin/AppSettings';
+import { RevenueOverview } from '@/components/admin/RevenueOverview';
+import { Button } from '@/components/ui/button';
+import { Plus, UserPlus, Building2, Wrench } from 'lucide-react';
+
+export default function SuperAdminDashboard() {
+  const [tab, setTab] = useState('overview');
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight">لوحة تحكم المشرف العام</h1>
+        <div className="space-x-2">
+          <Button variant="outline" className="flex items-center gap-2">
+            <UserPlus size={16} /> مستخدم جديد
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Building2 size={16} /> إضافة عقار
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Wrench size={16} /> خدمة جديدة
+          </Button>
+        </div>
+      </div>
+
+      <Tabs defaultValue="overview" onValueChange={setTab}>
+        <TabsList className="flex-wrap">
+          <TabsTrigger value="overview">نظرة عامة</TabsTrigger>
+          <TabsTrigger value="users">المستخدمون</TabsTrigger>
+          <TabsTrigger value="properties">العقارات</TabsTrigger>
+          <TabsTrigger value="services">الخدمات</TabsTrigger>
+          <TabsTrigger value="settings">الإعدادات</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview">
+          <RevenueOverview />
+        </TabsContent>
+
+        <TabsContent value="users">
+          <UsersTable />
+        </TabsContent>
+
+        <TabsContent value="properties">
+          <PropertiesTable />
+        </TabsContent>
+
+        <TabsContent value="services">
+          <ServicesTable />
+        </TabsContent>
+
+        <TabsContent value="settings">
+          <AppSettings />
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
+
+// ✅ الآن لوحة المشرف تحتوي على:
+// - أزرار سريعة لإضافة مستخدم أو عقار أو خدمة
+// - أقسام تبويبية مرنة لتصفح وتحكم فوري
+// - جاهزية للتوسع لإضافة إشعارات، شكاوى، أو سجل نشاط لاحقًا

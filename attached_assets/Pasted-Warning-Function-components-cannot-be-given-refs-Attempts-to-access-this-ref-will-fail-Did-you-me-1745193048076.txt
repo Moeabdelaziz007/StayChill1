@@ -1,0 +1,49 @@
+Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+
+Check the render method of `Primitive.button.SlotClone`.
+    at Badge (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/ui/badge.tsx:35:18)
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-2K77HOHX.js?v=6010019e:79:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-2K77HOHX.js?v=6010019e:56:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-AXMZZQ2X.js?v=6010019e:42:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-2K77HOHX.js?v=6010019e:79:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-2K77HOHX.js?v=6010019e:56:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-AXMZZQ2X.js?v=6010019e:42:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-TSMXHQXX.js?v=6010019e:1929:13
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6010019e:197:13
+    at Provider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=6010019e:38:15)
+    at Provider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=6010019e:38:15)
+    at Popper (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-TSMXHQXX.js?v=6010019e:1921:11)
+    at Tooltip (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6010019e:106:5)
+    at Provider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=6010019e:38:15)
+    at TooltipProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6010019e:62:5)
+    at div
+    at div
+    at div
+    at _c (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/ui/card.tsx:20:11)
+    at ServiceCard (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/services/ServiceCard.tsx:24:31)
+    at div
+    at div
+    at ServicesPage (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/pages/services.tsx:300:17)
+    at main
+    at div
+    at MainLayout (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/layout/MainLayout.tsx?t=1745192944752:22:23)
+    at Route (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6010019e:323:16)
+    at Switch (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6010019e:379:17)
+    at Suspense
+    at div
+    at MicroInteractionProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/animations/MicroInteractionContext.tsx:29:44)
+    at NetworkErrorProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/contexts/network-error-context.tsx:26:40)
+    at A11yProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/a11y/A11yProvider.tsx:29:32)
+    at ThemeProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/layout/Header.tsx:76:3)
+    at App (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/App.tsx?t=1745192944752&v=xyE9ndh0dz4zwKKplMnVe:157:16)
+    at Provider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=6010019e:38:15)
+    at TooltipProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6010019e:62:5)
+    at AuthProvider…
+Failed request to /api/me after multiple retries 
+Error {}
+
+Error fetching user: 
+Error {}
+
+Slow request (1131ms): GET /api/properties/featured?limit=6
+

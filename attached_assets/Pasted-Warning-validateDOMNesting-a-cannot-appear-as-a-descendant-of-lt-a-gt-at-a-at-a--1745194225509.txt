@@ -1,0 +1,49 @@
+Warning: validateDOMNesting(...): <a> cannot appear as a descendant of &lt;a&gt;.
+    at a
+    at a
+    at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bbd8551e:337:18
+    at div
+    at div
+    at div
+    at AdminLayout (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/layout/AdminLayout.tsx:23:24)
+    at AccessGuard (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/auth/access-guard.tsx:23:3)
+    at ProtectedRoute (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/App.tsx?v=reX-xM4VRrOkVNDKYM5aZ:122:27)
+    at Route (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bbd8551e:323:16)
+    at Switch (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bbd8551e:379:17)
+    at Suspense
+    at div
+    at MicroInteractionProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/animations/MicroInteractionContext.tsx:29:44)
+    at NetworkErrorProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/contexts/network-error-context.tsx:26:40)
+    at A11yProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/a11y/A11yProvider.tsx:29:32)
+    at ThemeProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/layout/Header.tsx:76:3)
+    at App (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/App.tsx?v=reX-xM4VRrOkVNDKYM5aZ:157:16)
+    at Provider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=bbd8551e:38:15)
+    at TooltipProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=bbd8551e:62:5)
+    at AuthProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/hooks/use-auth.tsx:49:32)
+    at QueryClientProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=bbd8551e:2805:3)
+at a
+at a
+at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bbd8551e:337:18
+at div
+at div
+at div
+at AdminLayout (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/layout/AdminLayout.tsx:23:24)
+at AccessGuard (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/auth/access-guard.tsx:23:3)
+at ProtectedRoute (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/App.tsx?v=reX-xM4VRrOkVNDKYM5aZ:122:27)
+at Route (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bbd8551e:323:16)
+at Switch (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bbd8551e:379:17)
+at Suspense
+at div
+at MicroInteractionProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/animations/MicroInteractionContext.tsx:29:44)
+at NetworkErrorProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/contexts/network-error-context.tsx:26:40)
+at A11yProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/a11y/A11yProvider.tsx:29:32)
+at ThemeProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/components/layout/Header.tsx:76:3)
+at App (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/App.tsx?v=reX-xM4VRrOkVNDKYM5aZ:157:16)
+at Provider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=bbd8551e:38:15)
+at TooltipProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=bbd8551e:62:5)
+at AuthProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/src/hooks/use-auth.tsx:49:32)
+at QueryClientProvider (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=bbd8551e:2805:3)
+at t.value (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://29cef38f-c3a6-49a9-92cd-ab7f91970c74-00-3svm9bvmyq34q.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

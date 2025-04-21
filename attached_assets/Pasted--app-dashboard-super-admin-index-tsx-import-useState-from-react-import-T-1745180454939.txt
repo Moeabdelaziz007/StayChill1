@@ -1,0 +1,107 @@
+// 📁 مسار افتراضي: app/dashboard/super-admin/index.tsx
+import { useState } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { UsersTable } from '@/components/admin/UsersTable';
+import { PropertiesTable } from '@/components/admin/PropertiesTable';
+import { ServicesTable } from '@/components/admin/ServicesTable';
+import { AppSettings } from '@/components/admin/AppSettings';
+import { RevenueOverview } from '@/components/admin/RevenueOverview';
+import { ActivityLog } from '@/components/admin/ActivityLog';
+import { NotificationsPanel } from '@/components/admin/NotificationsPanel';
+import { PaymentsPanel } from '@/components/admin/PaymentsPanel';
+import { BookingsPanel } from '@/components/admin/BookingsPanel';
+import { Button } from '@/components/ui/button';
+import { Plus, UserPlus, Building2, Wrench, BellRing, ShieldCheck, CreditCard, CalendarCheck } from 'lucide-react';
+
+export default function SuperAdminDashboard() {
+  const [tab, setTab] = useState('overview');
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight">لوحة تحكم المشرف العام</h1>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" className="flex items-center gap-2">
+            <UserPlus size={16} /> مستخدم جديد
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Building2 size={16} /> إضافة عقار
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Wrench size={16} /> خدمة جديدة
+          </Button>
+          <Button variant="secondary" className="flex items-center gap-2">
+            <BellRing size={16} /> الإشعارات
+          </Button>
+          <Button variant="secondary" className="flex items-center gap-2">
+            <ShieldCheck size={16} /> سجل الأمان
+          </Button>
+          <Button variant="secondary" className="flex items-center gap-2">
+            <CalendarCheck size={16} /> الحجوزات
+          </Button>
+          <Button variant="secondary" className="flex items-center gap-2">
+            <CreditCard size={16} /> المدفوعات
+          </Button>
+        </div>
+      </div>
+
+      <Tabs defaultValue="overview" onValueChange={setTab}>
+        <TabsList className="flex-wrap">
+          <TabsTrigger value="overview">نظرة عامة</TabsTrigger>
+          <TabsTrigger value="users">المستخدمون</TabsTrigger>
+          <TabsTrigger value="properties">العقارات</TabsTrigger>
+          <TabsTrigger value="services">الخدمات</TabsTrigger>
+          <TabsTrigger value="bookings">الحجوزات</TabsTrigger>
+          <TabsTrigger value="payments">المدفوعات</TabsTrigger>
+          <TabsTrigger value="notifications">الإشعارات</TabsTrigger>
+          <TabsTrigger value="activity">سجل النشاط</TabsTrigger>
+          <TabsTrigger value="settings">الإعدادات</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview">
+          <RevenueOverview />
+        </TabsContent>
+
+        <TabsContent value="users">
+          <UsersTable />
+        </TabsContent>
+
+        <TabsContent value="properties">
+          <PropertiesTable />
+        </TabsContent>
+
+        <TabsContent value="services">
+          <ServicesTable />
+        </TabsContent>
+
+        <TabsContent value="bookings">
+          <BookingsPanel />
+        </TabsContent>
+
+        <TabsContent value="payments">
+          <PaymentsPanel />
+        </TabsContent>
+
+        <TabsContent value="notifications">
+          <NotificationsPanel />
+        </TabsContent>
+
+        <TabsContent value="activity">
+          <ActivityLog />
+        </TabsContent>
+
+        <TabsContent value="settings">
+          <AppSettings />
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
+
+// ✅ لوحة المشرف الآن تشمل:
+// - إدارة المستخدمين والعقارات والخدمات
+// - نظام حجوزات ومدفوعات متكامل
+// - أزرار تنفيذية سريعة مع رموز واضحة
+// - نظام إشعارات وسجل أمان وواجهة قابلة للتوسعة
+// - جاهزة لربط Firebase أو أنظمة تحليلية متقدمة

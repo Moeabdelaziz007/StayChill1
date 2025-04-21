@@ -1,0 +1,74 @@
+"أنشئ صفحة في لوحة تحكم Super Admin باسم PropertyBookingManagement.tsx، تعرض قسمين: الأول جدول بكل العقارات في النظام، والثاني جدول بالحجوزات. كل جدول يحتوي على زر تعديل، حذف، وتعطيل (Deactivate). استخدم Firestore كمصدر للبيانات (collections: properties, bookings). كل عقار يجب أن يظهر معه اسم المالك، والموقع، والحالة. كل حجز يجب أن يعرض اسم المستخدم، العقار، التواريخ، الحالة، والسعر. استخدم Tailwind لتنسيق الجداول بشكل احترافي."
+
+✅ مكونات الصفحة:
+العقارات (Properties):
+
+الاسم
+
+المالك (owner name/email)
+
+الموقع
+
+الحالة (مفعل / غير مفعل)
+
+الإجراءات: تعديل ✏️، حذف 🗑️، تعطيل 🚫
+
+الحجوزات (Bookings):
+
+اسم المستخدم
+
+اسم العقار
+
+تاريخ الوصول والمغادرة
+
+الحالة (محجوز، مؤكد، ملغى)
+
+السعر الكلي
+
+الإجراءات: تعديل، إلغاء، حذف
+
+🧩 مثال تصميم جدول:
+tsx
+Copy
+Edit
+<table className="w-full table-auto border">
+  <thead className="bg-gray-100 text-right">
+    <tr>
+      <th className="p-2">العقار</th>
+      <th className="p-2">المالك</th>
+      <th className="p-2">الموقع</th>
+      <th className="p-2">الحالة</th>
+      <th className="p-2">إجراءات</th>
+    </tr>
+  </thead>
+  <tbody>
+    {properties.map((prop) => (
+      <tr key={prop.id} className="border-b">
+        <td className="p-2">{prop.name}</td>
+        <td className="p-2">{prop.ownerEmail}</td>
+        <td className="p-2">{prop.location}</td>
+        <td className="p-2">
+          <span className={`text-sm ${prop.active ? 'text-green-600' : 'text-red-600'}`}>
+            {prop.active ? 'مفعل' : 'غير مفعل'}
+          </span>
+        </td>
+        <td className="p-2 space-x-1">
+          <button className="bg-indigo-500 px-2 py-1 text-white rounded">تعديل</button>
+          <button className="bg-yellow-500 px-2 py-1 text-white rounded">تعطيل</button>
+          <button className="bg-red-600 px-2 py-1 text-white rounded">حذف</button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+🔒 ملاحظات فنية:
+اجلب البيانات من properties و bookings باستخدام onSnapshot.
+
+استخدم property.ownerId للربط مع المستخدم.
+
+للحجوزات، اربط booking.userId مع المستخدم و booking.propertyId مع العقار.
+
+يمكن التحكم بالحالة عبر زر يغير status في Firestore.
+
+يفضل أن يتم تنفيذ العمليات الحساسة (حذف/تعديل) عبر Cloud Functions للتحكم الكامل.
+

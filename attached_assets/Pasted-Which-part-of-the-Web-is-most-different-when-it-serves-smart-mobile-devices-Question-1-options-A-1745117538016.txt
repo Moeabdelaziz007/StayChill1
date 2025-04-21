@@ -1,0 +1,368 @@
+Which part of the Web is most different when it serves smart mobile devices?
+
+Question 1 options:
+
+A) 
+
+HTTP protocol
+
+
+B) 
+
+User interaction and experience
+
+
+C) 
+
+Web server
+
+
+D) 
+
+URL
+
+
+E) 
+
+Domain
+
+Question 2 (1 point) 
+
+Listen
+Select all that apply: What are the goals of responsive web design?
+
+Select 2 correct answer(s)
+Question 2 options:
+
+To enhance security on mobile devices
+
+
+To ensure websites look the same on all devices 
+
+
+To have a unified one-web development approach
+
+
+To make websites adapt visually and functionally to different devices and screen sizes 
+
+
+To load webpages faster
+
+Question 3 (1 point) 
+
+Listen
+You must write custom JavaScript to make a website responsive.
+
+Question 3 options:
+	True
+	False
+Question 4 (0.5 points) 
+
+Listen
+Which of the following feature is NOT addressed by responsive web design?
+
+Question 4 options:
+
+A) 
+
+Content hiding
+
+
+B) 
+
+Small screen
+
+
+C) 
+
+Device hardware sensors like gyroscope
+
+
+D) 
+
+Screen portrait orientation
+
+
+E) 
+
+Page layout
+
+Question 5 (0.5 points) 
+
+Listen
+Which of the following is not a key element of responsive web design?
+
+Question 5 options:
+
+A) 
+
+Media queries
+
+
+B) 
+
+Fluid grids
+
+
+C) 
+
+Touch friendly action
+
+
+D) 
+
+Flexible image
+
+Question 6 (0.5 points) 
+
+Listen
+The essence of fluid grids is:
+
+Question 6 options:
+
+A) 
+
+Use relative path
+
+
+B) 
+
+Use relative height
+
+
+C) 
+
+Use relative position
+
+
+D) 
+
+Use relative width and spacing
+
+Question 7 (0.5 points) 
+
+Listen
+Media queries are supported by:
+
+Question 7 options:
+
+A) 
+
+All major browsers of the latest versions
+
+
+B) 
+
+Major browsers except for Internet Explorer
+
+
+C) 
+
+Mobile browsers only
+
+
+D) 
+
+JavaScript
+
+Question 8 (0.5 points) 
+
+Listen
+Which media property is used in setting up a mobile-first or progressive enhancement style media queries?
+
+Question 8 options:
+
+max-width
+
+
+device-width
+
+
+min-width
+
+
+height
+
+
+width
+
+Question 9 (0.5 points) 
+
+Listen
+Which of the following is NOT a media feature that can be specified in CSS media queries?
+
+Question 9 options:
+
+A) 
+
+aspect-ratio
+
+
+B) 
+
+width
+
+
+C) 
+
+color
+
+
+D) 
+
+orientation
+
+
+E) 
+
+speed
+
+Question 10 (0.5 points) 
+
+Listen
+Which of the following web page UI feature is least difficult for mobile device users?
+
+Question 10 options:
+
+A) 
+
+Hover
+
+
+B) 
+
+Stacked in-line text links
+
+
+C) 
+
+Right-click contextual menus
+
+
+D) 
+
+Icon buttons
+
+Question 11 (0.5 points) 
+
+Listen
+Which one of the following is incorrect about adaptive web design?
+
+Question 11 options:
+
+Client detection methods are often used in adaptive design.
+
+
+Adaptive design only addresses screen sizes.
+
+
+Adaptation can be done at the server side and the client side.
+
+
+Responsive design sometimes can be viewed as a specific type of adaptive design.
+
+Question 12 (0.5 points) 
+
+Listen
+Which of the following about mobile friendly web navigation is incorrect?
+
+Question 12 options:
+
+A) 
+
+Avoid using drop down menus that rely on hover effect
+
+
+B) 
+
+Menus should not take a big screen space by default
+
+
+C) 
+
+Menus should be placed on the homepage only.
+
+
+D) 
+
+Try to limit the number of items in any menu
+
+Question 13 (0.5 points) 
+
+Listen
+Which navigation pattern hides (minimizes) the menu first and expands the menu upon request?
+Question 13 options:
+
+Footer Anchor
+
+
+Top Nav
+
+
+Toggle
+
+
+Sticky Footer
+
+Question 14 (1 point) 
+
+Listen
+Which of the following is correct about the differences between CSS layout techniques of flexbox and grid?
+
+Question 14 options:
+
+Grid can use a template method to define the layout, but flexbox cannot.
+
+
+Flexbox can achieve the same results as grid, but grid cannot achieve the same results as flexbox.
+
+
+Flexbox is responsive but grid is not.
+
+
+Grid is only for the whole page layout and flexbox is for data items layout only.
+
+Question 15 (0.5 points) 
+
+Listen
+Which of the following techniques is the best to make a responsive layout for displaying 100 products?
+
+Question 15 options:
+
+CSS grid
+
+
+HTML table tag
+
+
+CSS flexbox
+
+
+CSS div float
+
+Question 16 (0.5 points) 
+
+Listen
+Which of the following is NOT a good practice when designing mobile friendly forms?
+
+Question 16 options:
+
+Use checkboxes instead of radio buttons.
+
+
+Avoid using dropdown form controls for field with very few choices.
+
+
+Place field labels above the field.
+
+
+Provide instant feedback to user input and place them close to the input control.
+
+Question 17 (0.5 points) 
+
+Listen
+Mobile device simulators (like the one in Chrome) can completely replace the real mobile device for testing purposes.
+
+Question 17 options:
+	True
+	False
