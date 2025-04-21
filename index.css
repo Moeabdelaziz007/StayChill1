@@ -1,0 +1,864 @@
+/* Import Arabic and Latin fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* 2025 Luxury + Tech Color Palette */
+  --primary: 144 80% 48%; /* Phosphorescent green #18E96B */
+  --primary-dark: 144 80% 38%; /* Darker green #14B954 */
+  --primary-light: 144 75% 58%; /* Lighter green #4FEE8F */
+  
+  /* Dark mode optimized colors */
+  --background: 220 20% 5%; /* Deep black #0D0E12 - dark mode base */
+  --foreground: 0 0% 96%; /* Off-white text #F5F5F5 - easy to read */
+  --card: 220 18% 10%; /* Card background #171A21 */
+  --card-foreground: 0 0% 98%; /* Card text #FAFAFA */
+  --popover: 220 18% 8%; /* Popover background #131519 */
+  --popover-foreground: 0 0% 98%; /* Popover text #FAFAFA */
+  --muted: 220 15% 20%; /* Muted UI #2B303D */
+  --muted-foreground: 210 10% 70%; /* Muted text #A9B1BF - subtle gray */
+  --accent: 144 40% 15%; /* Subtle green accent #1B3225 */
+  --accent-foreground: 144 80% 48%; /* Accent text #18E96B */
+  --destructive: 0 90% 50%; /* Red for errors #F22A2A - high contrast */
+  --destructive-foreground: 0 0% 100%; /* Text on destructive #FFFFFF */
+  --border: 215 25% 20%; /* Borders #2A3247 - refined dark borders */
+  --input: 215 25% 20%; /* Input borders #2A3247 */
+  --ring: 144 80% 48%; /* Focus ring #18E96B */
+  
+  /* Brand specific - Luxury + Tech 2025 */
+  --brand: 144 80% 48%; /* Main brand color #18E96B - phosphorescent green */
+  --brand-dark: 220 20% 5%; /* Dark brand color #0D0E12 - almost black */
+  --brand-light: 144 70% 63%; /* Light brand color #5EEF98 */
+  --brand-accent: 215 80% 60%; /* Electric blue accent #3A8DF7 */
+  --brand-accent-dark: 215 80% 45%; /* Deeper blue #1B6CE2 */
+  
+  /* Glassmorphism effect variables */
+  --glass-background: rgba(20, 22, 27, 0.6);
+  --glass-border: rgba(144, 240, 180, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-blur: 12px;
+  
+  /* Luxury Drop shadows */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(5, 235, 110, 0.15);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(5, 235, 110, 0.2);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.5), 0 12px 24px rgba(5, 235, 110, 0.25);
+  --shadow-glow: 0 0 15px rgba(24, 233, 107, 0.5);
+  
+  /* Radius - sharper for tech feel */
+  --radius: 0.5rem;
+  
+  /* Spacing scale for consistency */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem;  /* 8px */
+  --spacing-md: 1rem;    /* 16px */
+  --spacing-lg: 1.5rem;  /* 24px */
+  --spacing-xl: 2rem;    /* 32px */
+  --spacing-2xl: 3rem;   /* 48px */
+  --spacing-3xl: 4rem;   /* 64px */
+}
+
+.dark {
+  /* Enhanced dark mode */
+  --background: 212 45% 8%; /* Deeper background #0A1521 */
+  --foreground: 210 30% 98%; /* Crisp text #F6F9FD */
+  --card: 212 35% 14%; /* Refined card #162435 */
+  --card-foreground: 210 40% 98%; /* Card text #F8FAFD */
+  --popover: 212 30% 15%; /* Popover background #1C2C3F */
+  --popover-foreground: 210 40% 98%; /* Popover text #F8FAFD */
+  --muted: 212 20% 20%; /* Muted UI #232F3F */
+  --muted-foreground: 210 40% 80%; /* Muted text #B1C5E5 */
+  --accent: 206 100% 20%; /* Accent background #002C52 */
+  --accent-foreground: 210 40% 98%; /* Accent text #F8FAFD */
+  --destructive: 0 84.2% 50%; /* Red for errors #DB2828 */
+  --destructive-foreground: 210 40% 98%; /* Text on destructive #F8FAFD */
+  --border: 212 30% 25%; /* Borders #2B3F59 */
+  --input: 212 30% 25%; /* Input borders #2B3F59 */
+  --ring: 201 100% 40%; /* Focus ring #00689C */
+}
+
+.dark .card {
+  @apply backdrop-blur-sm bg-opacity-90 shadow-xl;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animations */
+@keyframes wave {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-25%) translateY(-5px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes float-slow {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes pulse-button {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake-animation {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(5px); }
+  50% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes pulse-success {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.animate-wave {
+  animation: wave 8s linear infinite;
+}
+
+.animate-wave-slow {
+  animation: wave 12s linear infinite;
+}
+
+.animate-wave-slower {
+  animation: wave 15s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.shake-animation {
+  animation: shake-animation 0.5s ease-in-out;
+}
+
+button[type="submit"]:not(:disabled):hover {
+  animation: pulse-button 0.5s infinite;
+}
+
+.payment-success-pulse {
+  animation: pulse-success 2s;
+}
+
+.pattern-egyptian {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Brand specific utility classes */
+.text-brand {
+  color: hsl(var(--brand));
+}
+
+.text-brand-dark {
+  color: hsl(var(--brand-dark));
+}
+
+.text-brand-light {
+  color: hsl(var(--brand-light));
+}
+
+.text-brand-gold {
+  color: hsl(var(--brand-gold));
+}
+
+.bg-brand {
+  background-color: hsl(var(--brand));
+}
+
+.bg-brand-dark {
+  background-color: hsl(var(--brand-dark));
+}
+
+.bg-brand-light {
+  background-color: hsl(var(--brand-light));
+}
+
+.bg-brand-gold {
+  background-color: hsl(var(--brand-gold));
+}
+
+.border-brand {
+  border-color: hsl(var(--brand));
+}
+
+.hover\:bg-brand-light:hover {
+  background-color: hsl(var(--brand-light));
+}
+
+.hover\:bg-brand-dark:hover {
+  background-color: hsl(var(--brand-dark));
+}
+
+/* Enhanced default styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  html[dir="rtl"] {
+    font-family: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+    font-size: 17px;
+    text-align: right;
+  }
+
+  html[dir="ltr"] {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 17px;
+    text-align: left;
+  }
+  
+  /* RTL specific overrides */
+  html[dir="rtl"] .ltr-only {
+    display: none !important;
+  }
+  
+  html[dir="ltr"] .rtl-only {
+    display: none !important;
+  }
+  
+  html[dir="rtl"] .flip-in-rtl {
+    transform: scaleX(-1);
+  }
+  
+  html[dir="rtl"] .reverse-flex {
+    flex-direction: row-reverse;
+  }
+  
+  html[dir="rtl"] .reverse-grid {
+    direction: rtl;
+  }
+  
+  /* RTL text alignment utilities */
+  html[dir="rtl"] .text-start {
+    text-align: right;
+  }
+  
+  html[dir="rtl"] .text-end {
+    text-align: left;
+  }
+  
+  /* RTL margin/padding utilities */
+  html[dir="rtl"] .ml-auto {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  html[dir="rtl"] .mr-auto {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  
+  html[dir="rtl"] .ml-1 {
+    margin-left: 0;
+    margin-right: 0.25rem;
+  }
+  
+  html[dir="rtl"] .ml-2 {
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
+  
+  html[dir="rtl"] .ml-3 {
+    margin-left: 0;
+    margin-right: 0.75rem;
+  }
+  
+  html[dir="rtl"] .ml-4 {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+  
+  html[dir="rtl"] .mr-1 {
+    margin-right: 0;
+    margin-left: 0.25rem;
+  }
+  
+  html[dir="rtl"] .mr-2 {
+    margin-right: 0;
+    margin-left: 0.5rem;
+  }
+  
+  html[dir="rtl"] .mr-3 {
+    margin-right: 0;
+    margin-left: 0.75rem;
+  }
+  
+  html[dir="rtl"] .mr-4 {
+    margin-right: 0;
+    margin-left: 1rem;
+  }
+  
+  html[dir="rtl"] .pl-1 {
+    padding-left: 0;
+    padding-right: 0.25rem;
+  }
+  
+  html[dir="rtl"] .pl-2 {
+    padding-left: -0;
+    padding-right: 0.5rem;
+  }
+  
+  html[dir="rtl"] .pl-3 {
+    padding-left: 0;
+    padding-right: 0.75rem;
+  }
+  
+  html[dir="rtl"] .pl-4 {
+    padding-left: 0;
+    padding-right: 1rem;
+  }
+  
+  html[dir="rtl"] .pr-1 {
+    padding-right: 0;
+    padding-left: 0.25rem;
+  }
+  
+  html[dir="rtl"] .pr-2 {
+    padding-right: 0;
+    padding-left: 0.5rem;
+  }
+  
+  html[dir="rtl"] .pr-3 {
+    padding-right: 0;
+    padding-left: 0.75rem;
+  }
+  
+  html[dir="rtl"] .pr-4 {
+    padding-right: 0;
+    padding-left: 1rem;
+  }
+  
+  /* RTL border radius adjustments */
+  html[dir="rtl"] .rounded-l-lg {
+    border-radius: 0;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+  
+  html[dir="rtl"] .rounded-r-lg {
+    border-radius: 0;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+  }
+  
+  /* RTL icons and directions classes */
+  html[dir="rtl"] .rtl-rotate-180 {
+    transform: rotate(180deg);
+  }
+  
+  html[dir="rtl"] .rtl-icon-flip {
+    transform: scaleX(-1);
+  }
+  
+  /* RTL Grid and Flex Adjustments */
+  html[dir="rtl"] .rtl-justify-end {
+    justify-content: flex-end;
+  }
+  
+  html[dir="rtl"] .rtl-items-end {
+    align-items: flex-end;
+  }
+  
+  /* RTL positioning overrides */
+  html[dir="rtl"] .rtl-right-auto {
+    right: auto;
+  }
+  
+  html[dir="rtl"] .rtl-left-auto {
+    left: auto;
+  }
+  
+  html[dir="rtl"] .right-0 {
+    right: auto;
+    left: 0;
+  }
+  
+  html[dir="rtl"] .left-0 {
+    left: auto;
+    right: 0;
+  }
+
+  body {
+    @apply antialiased bg-background text-foreground;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+
+  /* Improved typography scale */
+  h1 {
+    @apply text-4xl sm:text-5xl font-bold tracking-tight;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.2;
+  }
+
+  h2 {
+    @apply text-3xl sm:text-4xl font-bold tracking-tight;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.3;
+  }
+
+  h3 {
+    @apply text-2xl sm:text-3xl font-semibold;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.4;
+  }
+
+  h4 {
+    @apply text-xl sm:text-2xl font-semibold;
+    margin-bottom: var(--spacing-md);
+  }
+
+  h5 {
+    @apply text-lg sm:text-xl font-medium;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  p {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  /* Increase paragraph spacing for better readability */
+  p + p {
+    margin-top: var(--spacing-lg);
+  }
+
+  /* Improved white space around sections */
+  section {
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-xl) 0;
+  }
+
+  /* Card padding and spacing */
+  .card {
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  /* Container with standardized horizontal padding */
+  .container {
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+
+  /* Give buttons proper breathing room */
+  button, a.btn {
+    @apply transition-all duration-200 ease-in-out;
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  /* Form controls with consistent sizing */
+  input, select, textarea {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    @apply transition-colors duration-200;
+  }
+  
+  /* Smooth transitions for theme changes */
+  a, button, input, select, textarea {
+    transition: all 0.2s ease;
+  }
+}
+
+/* Modern glass effect utilities */
+@layer components {
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .glass-card {
+    @apply rounded-xl p-4;
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .glass-button {
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+    @apply hover:bg-white/20 active:bg-white/30;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+}
+
+/* Enhanced interaction states */
+.hover-lift {
+  @apply transition-transform duration-200;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-glow {
+  @apply transition-shadow duration-200;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(0, 104, 156, 0.2);
+}
+
+/* Improved spacing utilities */
+.space-x-comfort > * + * {
+  margin-left: var(--spacing-lg);
+}
+
+.space-y-comfort > * + * {
+  margin-top: var(--spacing-lg);
+}
+
+html[dir="rtl"] .space-x-comfort > * + * {
+  margin-left: 0;
+  margin-right: var(--spacing-lg);
+}
+
+/* Card effect for luxury feel */
+.luxury-card {
+  @apply bg-white rounded-xl overflow-hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.luxury-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Soft dividers for better visual separation */
+.soft-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  margin: var(--spacing-xl) 0;
+}
+
+/* Layout improvements */
+.grid-luxury {
+  @apply grid gap-6 sm:gap-8 md:gap-10;
+}
+
+/* Responsive paddings */
+.section-padding {
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+  }
+}
+
+/* تأثيرات بصرية للصور */
+.img-hover-zoom {
+  @apply overflow-hidden rounded-lg;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.5s ease;
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* تحسين الأزرار */
+.btn-luxury {
+  @apply px-6 py-3 rounded-full font-medium text-white;
+  background: linear-gradient(135deg, hsl(var(--brand)) 0%, hsl(var(--brand-light)) 100%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-luxury:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-luxury:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* تأطير محسن للبطاقات */
+.card-luxury {
+  @apply rounded-xl overflow-hidden bg-white;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card-luxury:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* إضافة مساحات متساوية بين العناصر */
+.spaced-items > * {
+  margin-bottom: var(--spacing-md);
+}
+
+.spaced-items > *:last-child {
+  margin-bottom: 0;
+}
+
+/* أنماط لوضع التباين العالي */
+.high-contrast {
+  /* تعيين ألوان النص والخلفية لتباين أعلى */
+  --background: 0 0% 0%; /* أسود */
+  --foreground: 0 0% 100%; /* أبيض */
+  
+  /* تعيين ألوان البطاقات والعناصر البارزة */
+  --card: 0 0% 10%; /* رمادي داكن للبطاقات */
+  --card-foreground: 0 0% 100%; /* نص أبيض على البطاقات */
+  
+  /* زيادة تباين عناصر واجهة المستخدم */
+  --primary: 60 100% 50%; /* أصفر فاقع */
+  --primary-foreground: 0 0% 0%; /* نص أسود على الألوان الأساسية */
+  
+  /* ألوان الروابط والتفاعلات */
+  --accent: 240 100% 50%; /* أزرق فاقع */
+  --accent-foreground: 0 0% 100%; /* أبيض */
+  
+  /* ألوان أخرى ذات تباين عالي */
+  --border: 0 0% 60%; /* حدود أكثر وضوحًا */
+  --ring: 60 100% 50%; /* حلقات التركيز أكثر وضوحًا */
+  
+  /* زيادة حجم الخط قليلاً للقراءة بشكل أفضل */
+  font-size: 110%;
+  
+  /* تخفيف الظلال والتأثيرات التي قد تقلل من التباين */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  
+  /* إزالة الألوان الشفافة */
+  background-image: none !important;
+}
+
+.high-contrast .glass-effect,
+.high-contrast .glass-card,
+.high-contrast .glass-button {
+  backdrop-filter: none !important;
+  background-color: hsl(var(--card)) !important;
+  box-shadow: none !important;
+  border: 2px solid hsl(var(--border)) !important;
+}
+
+.high-contrast a {
+  text-decoration: underline !important;
+  color: hsl(240, 100%, 50%) !important;
+}
+
+.high-contrast button:focus,
+.high-contrast a:focus,
+.high-contrast input:focus,
+.high-contrast select:focus,
+.high-contrast textarea:focus {
+  outline: 3px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* إضافة وضع الحركة المخفضة */
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation-duration: 0.001s !important;
+  transition-duration: 0.001s !important;
+  scroll-behavior: auto !important;
+}
+
+/* تحسينات إضافية للهواتف المحمولة */
+@layer components {
+  /* أزرار أكبر للهواتف المحمولة (أسهل للمس) */
+  .touch-friendly {
+    @apply min-h-[44px] min-w-[44px];
+    @apply p-3 sm:p-2;
+    @apply text-base sm:text-sm;
+  }
+  
+  /* عناصر القائمة المتجاوبة */
+  .mobile-menu-item {
+    @apply p-4 sm:p-2;
+    @apply text-lg sm:text-base;
+    @apply border-b sm:border-b-0;
+  }
+  
+  /* نموذج متجاوب للجوال */
+  .mobile-form {
+    @apply space-y-6 sm:space-y-4;
+  }
+  
+  .mobile-form-field {
+    @apply mb-4 sm:mb-2;
+  }
+  
+  .mobile-form-label {
+    @apply text-base sm:text-sm mb-2 sm:mb-1 block;
+  }
+  
+  .mobile-form-input {
+    @apply p-3 sm:p-2;
+    @apply text-base sm:text-sm;
+    @apply rounded-lg;
+    @apply w-full;
+  }
+  
+  /* بطاقات متجاوبة للجوال */
+  .mobile-card {
+    @apply p-5 sm:p-4;
+    @apply my-4 sm:my-3;
+    @apply flex flex-col sm:flex-row;
+    @apply gap-4 sm:gap-3;
+  }
+  
+  /* تعديل فواصل بين العناصر للجوال */
+  .mobile-spacing {
+    @apply p-4 sm:p-2;
+    @apply my-4 sm:my-2;
+    @apply gap-4 sm:gap-2;
+  }
+  
+  /* الشبكة المتجاوبة للهواتف */
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+    @apply gap-6 sm:gap-4;
+  }
+  
+  /* تخطيط لصفحات التفاصيل على الجوال */
+  .mobile-details-layout {
+    @apply flex flex-col lg:flex-row;
+    @apply gap-8 lg:gap-12;
+  }
+  
+  /* حاويات محتوى متجاوبة */
+  .content-container-mobile {
+    @apply px-4 sm:px-6 md:px-8 lg:px-12;
+    @apply py-6 sm:py-8 md:py-10 lg:py-12;
+  }
+  
+  /* شريط التنقل السفلي للجوال */
+  .mobile-bottom-nav {
+    @apply fixed bottom-0 left-0 right-0;
+    @apply flex justify-around items-center;
+    @apply bg-background/80 backdrop-blur-md;
+    @apply border-t border-border/50;
+    @apply p-2;
+    @apply md:hidden;
+  }
+  
+  /* عنصر قائمة تنقل سفلية للجوال */
+  .mobile-bottom-nav-item {
+    @apply flex flex-col items-center;
+    @apply py-1 px-3;
+    @apply text-xs;
+  }
+  
+  /* أيقونة قائمة التنقل السفلية */
+  .mobile-bottom-nav-icon {
+    @apply mb-1;
+    @apply text-xl;
+  }
+}
+
+/* تنسيق عناصر الواجهة الرئيسية للتناسق عبر الصفحات */
+.standard-heading {
+  @apply text-2xl sm:text-3xl md:text-4xl;
+  @apply font-bold;
+  @apply mb-4 sm:mb-6;
+  @apply tracking-tight;
+}
+
+.standard-subheading {
+  @apply text-lg sm:text-xl md:text-2xl;
+  @apply font-medium;
+  @apply mb-3 sm:mb-4;
+  @apply text-muted-foreground;
+}
+
+.standard-card {
+  @apply bg-card;
+  @apply rounded-xl;
+  @apply shadow-md;
+  @apply border border-border/50;
+  @apply overflow-hidden;
+  @apply transition-all duration-200;
+}
+
+.standard-button {
+  @apply font-medium;
+  @apply transition-colors duration-200;
+  @apply inline-flex items-center justify-center;
+  @apply rounded-lg;
+  @apply touch-friendly;
+}
+
+.standard-input {
+  @apply rounded-lg;
+  @apply border border-input;
+  @apply bg-background;
+  @apply px-3 py-2;
+  @apply text-sm;
+  @apply transition-colors;
+  @apply mobile-form-input;
+}
+
+/* تنسيق موحد للخطوط والنص */
+.standard-text {
+  @apply text-base;
+  @apply leading-relaxed;
+}
+
+.standard-label {
+  @apply text-sm font-medium;
+  @apply mb-1.5;
+  @apply block;
+}
+
+/* تنسيق الأقسام المتجاوبة */
+.standard-section {
+  @apply py-8 sm:py-12 md:py-16;
+  @apply space-y-6 sm:space-y-8 md:space-y-10;
+}

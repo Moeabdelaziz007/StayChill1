@@ -1,0 +1,612 @@
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Restaurant, Service, ServiceType } from "@shared/schema";
+import { useTranslation } from "@/lib/i18n";
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
+
+import { ServiceCard } from "@/components/services/ServiceCard";
+import { RestaurantReservationForm } from "@/components/restaurants/RestaurantReservationForm";
+import { NightclubReservationForm } from "@/components/services/NightclubReservationForm";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader2, Search, MapPin, Tag } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+
+// قائمة المواقع المتاحة
+const LOCATIONS = ["الساحل الشمالي", "رأس الحكمة", "مارينا", "شرم الشيخ", "مرسى مطروح"];
+// قائمة أنواع الخدمات
+const SERVICE_CATEGORIES = [
+  { id: "restaurant", name: "مطاعم", hasFee: false, fee: 0, feeDescription: "حجز مجاني" },
+  { id: "nightclub", name: "نوادي ليلية", hasFee: true, fee: 15, feeDescription: "رسوم حجز $15" },
+  { id: "cleaning", name: "خدمات تنظيف", hasFee: false, fee: 0, feeDescription: "قريباً" },
+  { id: "delivery", name: "توصيل", hasFee: false, fee: 0, feeDescription: "قريباً" },
+  { id: "car", name: "تأجير سيارات", hasFee: false, fee: 0, feeDescription: "قريباً" }
+];
+
+// قائمة أنواع المطابخ للمطاعم
+const CUISINE_TYPES = [
+  "مأكولات بحرية", 
+  "مأكولات مصرية", 
+  "مأكولات عربية", 
+  "مأكولات إيطالية", 
+  "مأكولات آسيوية", 
+  "وجبات سريعة"
+];
+
+// أنواع الأندية الليلية
+const NIGHTCLUB_TYPES = [
+  "شاطئية",
+  "موسيقى إلكترونية",
+  "حي",
+  "كوكتيل",
+  "VIP"
+];
+
+// Restaurant data for Ras El Hekma
+const RAS_EL_HEKMA_RESTAURANTS = [
+  {
+    id: 101,
+    name: "لافيستا",
+    description: "مطعم متميز بإطلالة بانورامية على البحر يقدم أشهى المأكولات البحرية الطازجة وألذ الأطباق المحلية والعالمية",
+    location: "رأس الحكمة",
+    address: "قرية لافيستا - الكيلو 240 الساحل الشمالي",
+    cuisineType: "مأكولات بحرية",
+    priceRange: "$$",
+    images: [
+      "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1560611588-163f49d6595a?w=800&auto=format&fit=crop&q=80"
+    ],
+    openingTime: "12:00",
+    closingTime: "00:00",
+    contactPhone: "+20123456789",
+    contactEmail: "info@lavista.com",
+    website: "https://lavista.com",
+    rating: 4.8,
+    reviewsCount: 120,
+    featured: true,
+    active: true
+  },
+  {
+    id: 102,
+    name: "أم علي",
+    description: "مطعم مصري أصيل يقدم أشهر الأكلات المصرية والمشويات بنكهات ساحلية مميزة",
+    location: "رأس الحكمة",
+    address: "قرية حكمة باي - رأس الحكمة",
+    cuisineType: "مأكولات مصرية",
+    priceRange: "$",
+    images: [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800&auto=format&fit=crop&q=80"
+    ],
+    openingTime: "11:00",
+    closingTime: "23:00",
+    contactPhone: "+20123456788",
+    rating: 4.5,
+    reviewsCount: 85,
+    featured: false,
+    active: true
+  },
+  {
+    id: 103,
+    name: "الميرا",
+    description: "مطعم راقي يقدم المأكولات الإيطالية الأصيلة مع إطلالة خلابة على البحر",
+    location: "رأس الحكمة",
+    address: "قرية هايد بارك - رأس الحكمة",
+    cuisineType: "مأكولات إيطالية",
+    priceRange: "$$$",
+    images: [
+      "https://images.unsplash.com/photo-1526234362653-3b75a0c07438?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?w=800&auto=format&fit=crop&q=80"
+    ],
+    openingTime: "13:00",
+    closingTime: "01:00",
+    contactPhone: "+20123456787",
+    contactEmail: "dine@almira.com",
+    website: "https://almira-restaurant.com",
+    rating: 4.9,
+    reviewsCount: 160,
+    featured: true,
+    active: true
+  }
+];
+
+// Restaurant data for El Sahel
+const EL_SAHEL_RESTAURANTS = [
+  {
+    id: 201,
+    name: "المينا",
+    description: "مطعم فاخر على شاطئ البحر المتوسط يقدم أطباق البحر الأبيض المتوسط مع لمسة مصرية",
+    location: "الساحل الشمالي",
+    address: "قرية المينا - الكيلو 120 الساحل الشمالي",
+    cuisineType: "مأكولات بحرية",
+    priceRange: "$$",
+    images: [
+      "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=800&auto=format&fit=crop&q=80"
+    ],
+    openingTime: "12:00",
+    closingTime: "00:00",
+    contactPhone: "+20123456786",
+    contactEmail: "info@elmina.com",
+    website: "https://elmina.com",
+    rating: 4.7,
+    reviewsCount: 210,
+    featured: true,
+    active: true
+  },
+  {
+    id: 202,
+    name: "نسمة",
+    description: "مطعم شاطئي بأجواء حيوية يقدم المشويات والوجبات السريعة المميزة",
+    location: "الساحل الشمالي",
+    address: "قرية ماراسي - الساحل الشمالي",
+    cuisineType: "وجبات سريعة",
+    priceRange: "$",
+    images: [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1560611588-c9a6f1c5f0a6?w=800&auto=format&fit=crop&q=80"
+    ],
+    openingTime: "10:00",
+    closingTime: "22:00",
+    contactPhone: "+20123456785",
+    rating: 4.3,
+    reviewsCount: 150,
+    featured: false,
+    active: true
+  },
+  {
+    id: 203,
+    name: "بلو باي",
+    description: "مطعم آسيوي راقي يقدم أشهى أطباق السوشي والماكي في أجواء هادئة على البحر",
+    location: "الساحل الشمالي",
+    address: "قرية بلو باي - الكيلو 140 الساحل الشمالي",
+    cuisineType: "مأكولات آسيوية",
+    priceRange: "$$$",
+    images: [
+      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1535007129892-d70d727b0571?w=800&auto=format&fit=crop&q=80"
+    ],
+    openingTime: "13:00",
+    closingTime: "01:00",
+    contactPhone: "+20123456784",
+    contactEmail: "info@bluebay.com",
+    website: "https://bluebay-restaurant.com",
+    rating: 4.8,
+    reviewsCount: 180,
+    featured: true,
+    active: true
+  }
+];
+
+// Nightclub data for Ras El Hekma
+const RAS_EL_HEKMA_NIGHTCLUBS = [
+  {
+    id: 501,
+    name: "كريستال بيتش",
+    description: "نادي شاطئي راقي يقدم أجواء ممتعة مع أفضل الدي جي والموسيقى الحية على شاطئ البحر",
+    location: "رأس الحكمة",
+    address: "قرية كريستال باي - رأس الحكمة",
+    serviceType: "nightclub",
+    priceRange: "$$$",
+    image: "https://images.unsplash.com/photo-1559924136-c700d2214393?w=800&auto=format&fit=crop&q=80",
+    nightclubType: "شاطئية",
+    openingTime: "22:00",
+    closingTime: "04:00",
+    contactPhone: "+20123456790",
+    rating: 4.9,
+    reviewsCount: 220,
+    featured: true,
+    active: true,
+    coverCharge: 30,
+    events: ["ليالي التيكيلا", "حفلات القمر الكامل"],
+    reservationFee: 15
+  },
+  {
+    id: 502,
+    name: "سكاي لاونج",
+    description: "نادي على السطح بإطلالة بانورامية على البحر يقدم أجواء راقية وكوكتيلات مميزة",
+    location: "رأس الحكمة",
+    address: "فندق سي ستار - رأس الحكمة",
+    serviceType: "nightclub",
+    priceRange: "$$",
+    image: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&auto=format&fit=crop&q=80",
+    nightclubType: "كوكتيل",
+    openingTime: "20:00",
+    closingTime: "02:00",
+    contactPhone: "+20123456791",
+    rating: 4.7,
+    reviewsCount: 185,
+    featured: false,
+    active: true,
+    coverCharge: 20,
+    events: ["ليالي الجاز", "عروض الكوكتيل"],
+    reservationFee: 15
+  }
+];
+
+// Nightclub data for El Sahel
+const EL_SAHEL_NIGHTCLUBS = [
+  {
+    id: 601,
+    name: "بيتش هاوس",
+    description: "النادي الشاطئي الأشهر في الساحل الشمالي مع أفضل الأجواء والموسيقى الإلكترونية",
+    location: "الساحل الشمالي",
+    address: "قرية هاسيندا باي - الكيلو 130 الساحل الشمالي",
+    serviceType: "nightclub",
+    priceRange: "$$$",
+    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&auto=format&fit=crop&q=80",
+    nightclubType: "موسيقى إلكترونية",
+    openingTime: "23:00",
+    closingTime: "06:00",
+    contactPhone: "+20123456792",
+    rating: 4.8,
+    reviewsCount: 320,
+    featured: true,
+    active: true,
+    coverCharge: 40,
+    events: ["حفلات DJ عالمية", "مهرجان الصيف"],
+    reservationFee: 15
+  },
+  {
+    id: 602,
+    name: "سي كلوب VIP",
+    description: "نادي VIP حصري للأعضاء يقدم تجربة راقية وخدمة متميزة في جو من الخصوصية",
+    location: "الساحل الشمالي",
+    address: "قرية سي فيو - الكيلو 150 الساحل الشمالي",
+    serviceType: "nightclub",
+    priceRange: "$$$$",
+    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=80",
+    nightclubType: "VIP",
+    openingTime: "21:00",
+    closingTime: "04:00",
+    contactPhone: "+20123456793",
+    rating: 4.9,
+    reviewsCount: 120,
+    featured: true,
+    active: true,
+    coverCharge: 75,
+    events: ["ليالي الشامبانيا", "حفلات خاصة"],
+    reservationFee: 15
+  },
+  {
+    id: 603,
+    name: "ريثم لاونج",
+    description: "مساحة عصرية للحفلات الحية مع أفضل الفرق الموسيقية في مصر",
+    location: "الساحل الشمالي",
+    address: "قرية بورتو مارينا - الساحل الشمالي",
+    serviceType: "nightclub",
+    priceRange: "$$",
+    image: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=800&auto=format&fit=crop&q=80",
+    nightclubType: "حي",
+    openingTime: "20:00",
+    closingTime: "03:00",
+    contactPhone: "+20123456794",
+    rating: 4.6,
+    reviewsCount: 210,
+    featured: false,
+    active: true,
+    coverCharge: 25,
+    events: ["حفلات موسيقية حية", "ليالي العود"],
+    reservationFee: 15
+  }
+];
+
+// تجميع كل المطاعم والنوادي الليلية
+const ALL_RESTAURANTS = [...RAS_EL_HEKMA_RESTAURANTS, ...EL_SAHEL_RESTAURANTS];
+const ALL_NIGHTCLUBS = [...RAS_EL_HEKMA_NIGHTCLUBS, ...EL_SAHEL_NIGHTCLUBS];
+
+interface ServiceProps {
+  id: number;
+  name: string;
+  description: string;
+  location: string;
+  address: string;
+  serviceType: string;
+  priceRange: string;
+  image: string;
+  rating?: number;
+  reviewsCount?: number;
+  featured?: boolean;
+  active?: boolean;
+  contactPhone?: string;
+  contactEmail?: string;
+  website?: string;
+  openingTime?: string;
+  closingTime?: string;
+  cuisineType?: string;
+  nightclubType?: string;
+  coverCharge?: number;
+  events?: string[];
+  reservationFee?: number;
+}
+
+export default function ServicesPage() {
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedServiceType, setSelectedServiceType] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedService, setSelectedService] = useState<ServiceProps | null>(null);
+
+  // تحويل بيانات الخدمات إلى تنسيق موحد
+  const transformRestaurantsToServices = (restaurants: any[]): ServiceProps[] => {
+    return restaurants.map(restaurant => ({
+      ...restaurant,
+      serviceType: "restaurant",
+      image: restaurant.images?.[0] || "",
+    }));
+  };
+
+  const services: ServiceProps[] = [
+    ...transformRestaurantsToServices(ALL_RESTAURANTS),
+    ...ALL_NIGHTCLUBS
+  ];
+
+  // تصفية الخدمات حسب المعايير المحددة
+  const filteredServices = services.filter((service) => {
+    const matchesSearch = searchQuery
+      ? service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        service.description.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+    
+    const matchesLocation = selectedLocation && selectedLocation !== "all-locations"
+      ? service.location === selectedLocation
+      : true;
+    
+    const matchesServiceType = selectedServiceType !== "all"
+      ? service.serviceType === selectedServiceType
+      : true;
+    
+    const matchesCategory = selectedCategory
+      ? (service.serviceType === "restaurant" && service.cuisineType === selectedCategory) ||
+        (service.serviceType === "nightclub" && service.nightclubType === selectedCategory)
+      : true;
+    
+    return matchesSearch && matchesLocation && matchesServiceType && matchesCategory;
+  });
+
+  // معالج الضغط على زر الحجز
+  const handleReserveClick = (service: ServiceProps) => {
+    // التحقق إذا كان المستخدم مسجل الدخول
+    if (!user) {
+      toast({
+        title: t('common.loginRequired'),
+        description: t('services.loginToReserve'),
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setSelectedService(service);
+  };
+
+  // معالج إغلاق نموذج الحجز
+  const handleReservationClose = () => {
+    setSelectedService(null);
+  };
+
+  // معالج نجاح الحجز
+  const handleReservationSuccess = () => {
+    setSelectedService(null);
+    toast({
+      title: "تم الحجز بنجاح",
+      description: selectedService?.serviceType === "nightclub" 
+        ? "تم خصم رسوم الحجز $15 من رصيدك" 
+        : "تم الحجز مجاناً وإضافة 100 نقطة إلى رصيد مكافآتك",
+      variant: "default",
+    });
+  };
+
+  // تحميل الشكل المناسب عند تحميل البيانات
+  if (services.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[70vh]">
+        <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+        <p className="text-xl font-medium">{t('services.loading')}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {/* Hero Section with Background */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-700 dark:from-blue-800 dark:to-purple-900">
+        <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"></div>
+        <div className="container py-12 md:py-16 relative z-10">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-md">خدمات ستاي تشيل</h1>
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8">
+              استمتع بخدماتنا المتميزة في المطاعم والنوادي الليلية واكتشف المزيد من الخدمات القادمة قريباً
+            </p>
+            
+            {/* Search Bar - Hero Version */}
+            <div className="relative max-w-2xl mx-auto">
+              <div className="flex items-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-full p-1.5 pl-5 shadow-lg focus-within:ring-2 focus-within:ring-white/50">
+                <Search className="h-5 w-5 text-white/70 mr-2" />
+                <Input
+                  placeholder="ابحث عن خدمة..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="border-0 bg-transparent text-white placeholder:text-white/70 focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+                <Button className="rounded-full bg-white text-blue-600 hover:bg-white/90 hover:text-blue-700">
+                  بحث
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="container py-8">
+        {/* فلاتر البحث */}
+        <div className="bg-white dark:bg-gray-800/80 shadow-md rounded-xl p-4 mb-8 border border-gray-100 dark:border-gray-700">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="md:flex-1">
+              <div className="text-sm font-medium mb-2 text-gray-500 dark:text-gray-400">المواقع</div>
+              <Select
+                value={selectedLocation}
+                onValueChange={setSelectedLocation}
+              >
+                <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    <SelectValue placeholder="اختر الموقع" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all-locations">جميع المواقع</SelectItem>
+                  {LOCATIONS.map((location) => (
+                    <SelectItem key={location} value={location}>
+                      {location}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="md:flex-1">
+              <div className="text-sm font-medium mb-2 text-gray-500 dark:text-gray-400">التصنيف</div>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
+                <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center gap-2">
+                    <Tag className="h-4 w-4" />
+                    <SelectValue placeholder="اختر التصنيف" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">جميع التصنيفات</SelectItem>
+                  
+                  {/* إذا تم اختيار المطاعم فقط أو الكل، اعرض أنواع المطابخ */}
+                  {(selectedServiceType === "restaurant" || selectedServiceType === "all") && (
+                    <div>
+                      <div className="px-2 py-1.5 text-sm font-semibold">المطابخ</div>
+                      {CUISINE_TYPES.map((type) => (
+                        <SelectItem key={`cuisine-${type}`} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* إذا تم اختيار النوادي الليلية فقط أو الكل، اعرض أنواع النوادي */}
+                  {(selectedServiceType === "nightclub" || selectedServiceType === "all") && (
+                    <div>
+                      <div className="px-2 py-1.5 text-sm font-semibold">أنواع النوادي</div>
+                      {NIGHTCLUB_TYPES.map((type) => (
+                        <SelectItem key={`nightclub-${type}`} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </div>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+        
+        {/* أنواع الخدمات */}
+        <div className="w-full mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">فئات الخدمات المتاحة:</div>
+        <div className="flex flex-wrap gap-2 mb-8">
+          <Button
+            size="sm"
+            variant={selectedServiceType === "all" ? "default" : "outline"}
+            onClick={() => setSelectedServiceType("all")}
+            className="rounded-full"
+          >
+            جميع الخدمات
+          </Button>
+          
+          {SERVICE_CATEGORIES.map((category) => (
+            <Button
+              key={category.id}
+              size="sm"
+              variant={selectedServiceType === category.id ? "default" : "outline"}
+              onClick={() => setSelectedServiceType(category.id)}
+              className="rounded-full flex items-center gap-1.5"
+            >
+              {category.name}
+              {category.hasFee ? (
+                <Badge variant="outline" className="bg-blue-100 text-blue-700 text-xs ml-1">
+                  {category.feeDescription}
+                </Badge>
+              ) : (
+                category.feeDescription !== "حجز مجاني" && (
+                  <Badge variant="outline" className="bg-gray-100 text-gray-700 text-xs ml-1">
+                    {category.feeDescription}
+                  </Badge>
+                )
+              )}
+            </Button>
+          ))}
+        </div>
+        
+        {/* عرض الخدمات */}
+        {filteredServices.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-xl font-medium mb-2">لم يتم العثور على نتائج</p>
+          <p className="text-muted-foreground max-w-md mx-auto">
+            حاول تعديل معايير البحث أو تصفية نتائج مختلفة
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredServices.map((service) => (
+            <ServiceCard
+              key={`${service.serviceType}-${service.id}`}
+              service={service}
+              onReserveClick={handleReserveClick}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* خدمات قادمة قريباً */}
+      {selectedServiceType !== "restaurant" && selectedServiceType !== "nightclub" && selectedServiceType !== "all" && (
+        <div className="mt-12 p-8 bg-gray-50 rounded-2xl text-center">
+          <h2 className="text-2xl font-bold mb-4">هذه الخدمة قادمة قريباً</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+            نعمل حالياً على إضافة هذه الخدمة. ترقبوا المزيد من التفاصيل قريباً.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => setSelectedServiceType("all")}
+          >
+            استعرض الخدمات المتاحة
+          </Button>
+        </div>
+      )}
+
+      {/* نموذج الحجز في حوار منبثق */}
+      <Dialog open={!!selectedService} onOpenChange={(open) => !open && setSelectedService(null)}>
+        <DialogContent className="sm:max-w-xl">
+          {selectedService?.serviceType === "restaurant" && (
+            <RestaurantReservationForm
+              restaurant={selectedService as any}
+              onSuccess={handleReservationSuccess}
+              onCancel={handleReservationClose}
+            />
+          )}
+          {selectedService?.serviceType === "nightclub" && (
+            <NightclubReservationForm
+              nightclub={selectedService as any}
+              onSuccess={handleReservationSuccess}
+              onCancel={handleReservationClose}
+              reservationFee={15}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
